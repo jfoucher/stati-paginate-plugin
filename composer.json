@@ -1,0 +1,17 @@
+{
+    "name": "stati/paginate",
+    "description": "A paginator plugin for Stati",
+    "authors": [
+        {
+            "name": "jfoucher",
+            "email": "jfoucher@6px.eu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Stati\\Plugin\\Paginate\\": "src/", "Stati\\Plugin\\Paginate\\Tests\\": "tests/"}
+    },
+    "require": {
+        "php": "^5.6 || ^7.0"
+    },
+    "bin": ["build/profiler.phar"]
+}
