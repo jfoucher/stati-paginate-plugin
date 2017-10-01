@@ -34,8 +34,6 @@ class PaginateRenderer extends Renderer
         $finder->in('./')
             ->name('index.html')
             ->depth(' >=0')
-//            ->contains('/\{\{[\s]*paginator')
-            ->contains('/---\s+(.*)\s+---\s+/s')
             ;
 
         foreach ($finder as $file) {
@@ -44,6 +42,9 @@ class PaginateRenderer extends Renderer
                 $currentPage = $paginator->getPage();
                 $currentPagePath = $paginator->current_page_path;
                 $page = new PaginatorPage($file, $this->site, $currentPage, $currentPagePath);
+                if ($currentPage === 1) {
+                    $paginator->setFirstPagePath($page->getPath());
+                }
                 $rendered = $this->render($page);
                 $pages[] = $rendered;
                 // We now render the first page in /index.html, so this moves here

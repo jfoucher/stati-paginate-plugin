@@ -15,7 +15,7 @@ use Stati\Plugin\Paginate\Renderer\PaginateRenderer;
 use Stati\Plugin\Plugin;
 use Stati\Site\Site;
 use Stati\Site\SiteEvents;
-use Stati\Plugin\Paginate\Entity\Paginator as PaginatorEntity;
+use Stati\Plugin\Paginate\Entity\Paginator;
 use Stati\Liquid\TemplateEvents;
 
 class Paginate extends Plugin
@@ -38,9 +38,10 @@ class Paginate extends Plugin
         if (!$site->paginate) {
             return;
         }
+
         $docs = $site->getPosts();
 
-        $paginator = new PaginatorEntity($docs, $site->getConfig());
+        $paginator = new Paginator($docs, $site->getConfig());
         $site->paginator = $paginator;
     }
 

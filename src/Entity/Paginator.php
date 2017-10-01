@@ -41,9 +41,12 @@ class Paginator
     /**
      * How many posts per page
      *
-     * @var array
+     * @var int
      */
     public $per_page;
+
+
+    protected $firstPagePath;
 
     /**
      * Paginator constructor.
@@ -110,6 +113,9 @@ class Paginator
             if ($this->previous_page === null) {
                 return null;
             }
+            if ($this->previous_page === 1 && $this->getFirstPagePath()) {
+                return $this->getFirstPagePath();
+            }
             return str_replace('//', '/', '/'.str_replace(':num', $this->previous_page, $this->config['paginate_path']));
         }
 
@@ -131,6 +137,9 @@ class Paginator
                 return null;
             }
             if ($this->page === 1) {
+                if ($this->getFirstPagePath()) {
+                    return $this->getFirstPagePath();
+                }
                 return dirname(str_replace('//', '/', '/'.str_replace(':num', $this->page, $this->config['paginate_path'].'/'))).'/';
             }
             return str_replace('//', '/', '/'.str_replace(':num', $this->page, $this->config['paginate_path']));
@@ -165,5 +174,15 @@ class Paginator
     {
         $this->page = $page;
         return $this;
+    }
+
+    public function setFirstPagePath($path)
+    {
+        $this->firstPagePath = $path;
+    }
+
+    public function getFirstPagePath()
+    {
+        return $this->firstPagePath;
     }
 }
