@@ -12,7 +12,7 @@ namespace Stati\Plugin\Paginate\Entity;
 use Symfony\Component\Finder\SplFileInfo;
 use Stati\Parser\FrontMatterParser;
 use Stati\Parser\ContentParser;
-use Liquid\Template;
+use Stati\Liquid\Template\Template;
 use Liquid\Liquid;
 use Liquid\Cache\File;
 use Stati\Liquid\Block\Highlight;
@@ -72,7 +72,6 @@ class PaginatorPage extends Doc
             return file_get_contents($cacheDir.md5($content.$this->currentPage));
         }
         $template = new Template('./_includes/');
-        $template->registerTag('highlight', Highlight::class);
         $template->parse($contentPart);
         $config = [
             'page' => $this,
