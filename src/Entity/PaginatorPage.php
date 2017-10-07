@@ -60,17 +60,10 @@ class PaginatorPage extends Doc
             return $this->content;
         }
 
-        $cacheDir = '/tmp/post_cache/';
-        if (!is_dir($cacheDir)) {
-            mkdir($cacheDir);
-        }
-
         $parser = new ContentParser();
         $content = $this->file->getContents();
         $contentPart = $parser::parse($content);
-        if (is_file($cacheDir.md5($content.$this->currentPage))) {
-            return file_get_contents($cacheDir.md5($content.$this->currentPage));
-        }
+
         $template = new Template('./_includes/');
         $template->parse($contentPart);
         $config = [
@@ -82,7 +75,6 @@ class PaginatorPage extends Doc
 
 
         $this->content = $template->render($config);
-        file_put_contents($cacheDir.md5($content.$this->currentPage), $this->content);
         return $this->content;
     }
 }
